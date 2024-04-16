@@ -4,17 +4,22 @@ init({
     name: 'container',
     remotes: [
         {
-            name: "app1",
+            name: "app_csa",
             entry: "http://127.0.0.1:8001/remoteEntry.js",
+            // alias: "app1",
+        },
+        {
+            name: "app_dashboard",
+            entry: "http://127.0.0.1:8002/remoteEntry.js",
             // alias: "app1",
         },
     ],
 })
 
-loadRemote('app1/App1Init', { from: 'runtime' })
-    .then((app1) => {
+loadRemote('app_csa/AppInit', { from: 'runtime' })
+    .then((app) => {
         console.log('[CONTAINER] then')
-        app1.init(document.getElementById('container-root'))
+        app.init(document.getElementById('csa-root'))
     })
     .catch((e) => {
         console.log('[CONTAINER] error')
