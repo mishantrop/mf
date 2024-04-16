@@ -4,12 +4,23 @@ import ReactDOM from 'react-dom'
 export const init = (container) => {
     console.log('app-dashboard/bootstrap/init()')
 
-    const App = React.createElement(
-        'div',
-        null,
-        React.createElement('div', null, 'Dashboard React App Component'),
-    )
+    const App = () => {
+        return (
+            <div style={{
+                backgroundColor: '#dee',
+                border: '1px solid #f00',
+                borderRadius: '12px',
+                padding: '16px',
+            }}>
+                <div>Dashboard React App Component</div>
 
-    const root = ReactDOM.createRoot(container);
-    root.render(App)
+                <button>
+                    Hello, User
+                </button>
+            </div>
+        )
+    }
+
+    const root = ReactDOM.createRoot(container)
+    root.render(<App />)
 }
