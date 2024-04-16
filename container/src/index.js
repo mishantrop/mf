@@ -2,26 +2,48 @@ import { init, loadRemote } from '@module-federation/runtime'
 
 init({
     name: 'container',
-    remotes: [
-        {
-            name: "app_csa",
-            entry: "http://127.0.0.1:8001/remoteEntry.js",
-            // alias: "app1",
-        },
-        {
-            name: "app_dashboard",
-            entry: "http://127.0.0.1:8002/remoteEntry.js",
-            // alias: "app1",
-        },
-    ],
+    remotes: window.config.remotes,
 })
 
-loadRemote('app_csa/AppInit', { from: 'runtime' })
-    .then((app) => {
-        console.log('[CONTAINER] then')
-        app.init(document.getElementById('csa-root'))
+const initCsa = () => {
+    loadRemote('app_csa/AppInit', { from: 'runtime' })
+        .then((app) => {
+            app.init(document.getElementById('root'))
+        })
+        .catch((e) => {
+            console.error(e)
+        })
+}
+
+const initDashboard = () => {
+    loadRemote('app_dashboard/AppInit', { from: 'runtime' })
+        .then((app) => {
+            app.init(document.getElementById('root'))
+        })
+        .catch((e) => {
+            console.error(e)
+        })
+}
+
+const main = () => {
+    console.log('A')
+    window.addEventListener('storage', (event) => {
+        console.log(event)
+        if (event.key === 'logged') {
+            console.log(event.key, event.newValue)
+            if (event.newValue === 'da') {
+                initDashboard()
+            } else {
+                initCsa()
+            }
+        }
     })
-    .catch((e) => {
-        console.log('[CONTAINER] error')
-        console.error(e)
-    })
+
+    if (window.config.useStoredLogin) {
+        initDashboard()
+    } else {
+        initCsa()
+    }
+}
+
+main()

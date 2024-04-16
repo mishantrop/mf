@@ -1,8 +1,12 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom/client'
 
 export const init = (container) => {
     console.log('app-dashboard/bootstrap/init()')
+
+    const logout = () => {
+        localStorage.removeItem('logged')
+    }
 
     const App = () => {
         return (
@@ -14,8 +18,11 @@ export const init = (container) => {
             }}>
                 <div>Dashboard React App Component</div>
 
-                <button>
-                    Hello, User
+                <div>
+                    Hello, {window.config.userIO}
+                </div>
+                <button onClick={logout}>
+                    Logout
                 </button>
             </div>
         )

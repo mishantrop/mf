@@ -6,11 +6,24 @@
     <title>container</title>
 </head>
 <body>
-    <h1>Container</h1>
+    <script>
+        window.config = {
+            useStoredLogin: localStorage.getItem('logged') === 'da',
+            userIO: 'Реактослав Джеесов',
+
+            remotes: [
+                {
+                    name: 'app_csa',
+                    entry: 'http://127.0.0.1:8001/remoteEntry.js',
+                },
+                {
+                    name: 'app_dashboard',
+                    entry: 'http://127.0.0.1:8002/remoteEntry.js',
+                },
+            ],
+        }
+    </script>
 
     <div id="root"></div>
-
-    <div id="csa-root"></div>
-    <div id="dasboard-root"></div>
 </body>
 </html>
